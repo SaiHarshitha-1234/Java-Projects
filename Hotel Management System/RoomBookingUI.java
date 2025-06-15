@@ -35,6 +35,7 @@ public class RoomBookingUI extends JFrame {
 
         // Action to book room
         bookBtn.addActionListener(e -> {
+            synchronized(this){
             try (Connection con = DBConnection.getConnection()) {
                 String sql = "INSERT INTO guests (name, gender, address, aadhar_no, contact, room_id, checkin_date, checkout_date, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'booked')";
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -58,6 +59,7 @@ public class RoomBookingUI extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error booking room");
+            }
             }
         });
 
