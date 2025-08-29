@@ -1,0 +1,41 @@
+-- 1. Create Database
+CREATE DATABASE hotel_management;
+USE hotel_management;
+
+-- 2. Rooms Table
+CREATE TABLE rooms (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_number INT UNIQUE NOT NULL,
+    type VARCHAR(50),          -- Single, Double, Deluxe, Suite
+    price DECIMAL(10,2),
+    is_booked BOOLEAN DEFAULT FALSE
+);
+
+-- 3. Customers Table
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) UNIQUE,
+    email VARCHAR(100),
+    id_proof VARCHAR(50)        -- Aadhaar/Passport/etc.
+);
+
+-- 4. Bookings Table
+CREATE TABLE bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    check_in DATE,
+    check_out DATE,
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+
+-- 5. Staff Table (optional)
+CREATE TABLE staff (
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    role VARCHAR(50),      -- Manager, Receptionist, Cleaner
+    salary DECIMAL(10,2)
+);
